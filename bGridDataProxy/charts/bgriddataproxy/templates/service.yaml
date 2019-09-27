@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "bgriddataproxy.fullname" . }}
+  labels:
+    app: {{ template "bgriddataproxy.name" . }}
+    chart: {{ template "bgriddataproxy.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app: {{ template "bgriddataproxy.name" . }}
+    release: {{ .Release.Name }}
